@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
     subspec.dependency 'Anahita/Foundation'
 	subspec.dependency 'Anahita/CoreGraphics'
 	subspec.dependency 'Anahita/UIKit' 
-	subspec.dependency 'Nimbus/Core'	 
+	subspec.dependency 'Nimbus/Core', '~> 1.0.0'
   end
   
   s.subspec 'AnahitaUI' do |subspec|
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
     subspec.dependency 'Anahita/AnahitaAPI'
     subspec.dependency 'Anahita/CommonUI'
     subspec.dependency 'Anahita/Connect'   
-    subspec.dependency 'Nimbus/NetworkImage'    
+    subspec.dependency 'Nimbus/NetworkImage', '~> 1.0.0'
   end
     
   s.subspec 'Connect' do |subspec|    
@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
     subspec.source_files = 'src/Connect'  
     subspec.dependency 'Anahita/AnahitaAPI'
     subspec.dependency 'Anahita/CommonUI' 	
-    subspec.dependency 'Facebook-iOS-SDK', '~> 3.6.0' 
+    subspec.dependency 'Facebook-iOS-SDK', '~> 3.7.0'
     subspec.dependency 'SHOmniAuthTwitter', '~> 0.2.9'
   end
       
@@ -91,8 +91,8 @@ Pod::Spec.new do |s|
     subspec.source_files = 'src/CommonUI'
     subspec.dependency 'Anahita/AnahitaAPI'
     subspec.dependency 'Anahita/Styler'    
-    subspec.dependency 'Nimbus/Models'    
-    subspec.dependency 'Nimbus/WebController'
+    subspec.dependency 'Nimbus/Models', '~> 1.0.0'
+    subspec.dependency 'Nimbus/WebController', '~> 1.0.0'
     subspec.dependency 'JASidePanels'
   end  
   
