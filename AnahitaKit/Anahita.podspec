@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
     subspec.source_files = 'src/Connect'  
     subspec.dependency 'Anahita/AnahitaAPI'
     subspec.dependency 'Anahita/CommonUI' 	
-    subspec.dependency 'Facebook-iOS-SDK', '~> 3.7.0'
+    subspec.dependency 'Facebook-iOS-SDK', '~> 3.15.0'
     subspec.dependency 'SHOmniAuthTwitter', '~> 0.2.9'
   end
       
