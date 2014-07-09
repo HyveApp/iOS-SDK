@@ -57,7 +57,7 @@ Pod::Spec.new do |s|
   	subspec.header_dir   = 'AnahitaAPI'  
     subspec.source_files = 'src/AnahitaAPI'
     subspec.dependency 'Anahita/RestKit'
-    subspec.dependency 'FXKeychain', '~> 1.3.4'
+    subspec.dependency 'FXKeychain', '~> 1.5.0'
   end
     
   s.subspec 'RestKit' do |subspec|
