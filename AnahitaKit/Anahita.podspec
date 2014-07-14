@@ -50,7 +50,7 @@ Pod::Spec.new do |s|
     subspec.dependency 'Anahita/AnahitaAPI'
     subspec.dependency 'Anahita/CommonUI' 	
     subspec.dependency 'Facebook-iOS-SDK', '~> 3.15.0'
-    subspec.dependency 'SHOmniAuthTwitter', '~> 0.2.9'
+    subspec.dependency 'SHOmniAuthTwitter', '~> 0.2.10'
   end
       
   s.subspec 'AnahitaAPI' do |subspec|
@@ -64,7 +64,7 @@ Pod::Spec.new do |s|
   	subspec.header_dir   = 'RestKit'  
     subspec.source_files = 'src/RestKit'
     subspec.dependency 'Anahita/CoreSupport'
-	subspec.dependency 'RestKit/Core', '0.20.3'
+	subspec.dependency 'RestKit/Core', '~> 0.23.0'
   end
   
   s.subspec 'MapKit' do |subspec|
