@@ -17,7 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    int r = arc4random() % 1000;
+//    int r = arc4random() % 1000;
     AKPerson *person = [AKPerson new];
     person.name     = @"";//[NSString stringWithFormat:@"x%d", r];
     person.username = @"";//[NSString stringWithFormat:@"x%d", r];

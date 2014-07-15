@@ -18,7 +18,7 @@
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setTarget:self];
     [invocation setSelector:aSelector];
-    int numOfArgs = [signature numberOfArguments];
+    NSInteger numOfArgs = [signature numberOfArguments];
     va_list args;
     va_start(args, arg1);
     int i = 2;

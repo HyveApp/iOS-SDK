@@ -31,6 +31,8 @@
     AKSelectorFormElement *formElement = [self selectorWithID:elementID labelText:labelText values:@[] mutliSelect:multiSelect];
     formElement.dataLoader = dataLoader;
     formElement.isReady    = NO;
+    
+    __weak AKSelectorFormElement *weakFormElement = formElement;
     [formElement.dataLoader setCompletionBlockWithSuccess:^(NSArray *objects, NSUInteger page) {
         NSMutableArray *values, *labels;
         values = [NSMutableArray array];
@@ -41,9 +43,9 @@
                 [values addObject:value];
                 [labels addObject:label];
         }];
-        formElement.values  = values;
-        formElement.labels  = labels;
-        formElement.isReady = YES;
+        weakFormElement.values  = values;
+        weakFormElement.labels  = labels;
+        weakFormElement.isReady = YES;
     } failure:nil];
     [formElement.dataLoader loadData];
     return formElement;
@@ -100,12 +102,12 @@
 
 - (BOOL)isValueAtIndexSelected:(NSUInteger)index
 {
-    return [_selectedIndices containsObject:[NSNumber numberWithInt:index]];
+    return [_selectedIndices containsObject:[NSNumber numberWithUnsignedInteger:index]];
 }
 
 - (void)markValueAtIndex:(NSUInteger)index selected:(BOOL)selected
 {
-    NSNumber *object = [NSNumber numberWithInt:index];
+    NSNumber *object = [NSNumber numberWithUnsignedInteger:index];
     
     if ( selected ) {
         if ( !self.isMultiSelect ) {
@@ -219,7 +221,7 @@
     for (NSString *value in self.element.selectedValues)
     {
         if ( [self.element.values containsObject:value] ) {
-            int index = [self.element.values indexOfObject:value];
+            NSInteger index = [self.element.values indexOfObject:value];
             NSString *label = [self.element.labels objectAtIndex:index];
             [labels addObject:label];
             [self.element markValueAtIndex:index selected:YES];

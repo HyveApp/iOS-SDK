@@ -98,7 +98,7 @@
 {
     NSMethodSignature *signature = [self methodSignatureForSelector:selector];
     if ( signature != NULL ) {
-        int numOfArgs = [signature numberOfArguments];
+        NSInteger numOfArgs = [signature numberOfArguments];
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
         [invocation setSelector:selector];
         va_list args;

@@ -107,7 +107,7 @@ NSString *const kAKEntityDidDeleteNotification  = @"kAKEntityDidDeleteNotificati
             ) {
         
         _responseDescriptorsForCollection = @[[RKResponseDescriptor
-            responseDescriptorWithMapping:self.mappingForResponse pathPattern:self.pathPatternForGettingCollection keyPath:@"data" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
+                                               responseDescriptorWithMapping:self.mappingForResponse method:RKRequestMethodAny pathPattern:self.pathPatternForGettingCollection keyPath:@"data" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
     }
     
     return _responseDescriptorsForCollection;
@@ -121,7 +121,7 @@ NSString *const kAKEntityDidDeleteNotification  = @"kAKEntityDidDeleteNotificati
             ) {
         
         _responseDescriptorsForEntity = @[[RKResponseDescriptor
-            responseDescriptorWithMapping:self.mappingForResponse pathPattern:self.pathPatternForGettingEntity keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
+            responseDescriptorWithMapping:self.mappingForResponse method:RKRequestMethodAny pathPattern:self.pathPatternForGettingEntity keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
     }
     
     return _responseDescriptorsForEntity;

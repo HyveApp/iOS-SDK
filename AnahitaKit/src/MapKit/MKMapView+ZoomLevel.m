@@ -103,10 +103,10 @@
     }
     
     MKCoordinateRegion region = AKCoordinateRegionForCoordinates(coords,self.annotations.count);
-    
-    CLLocationDistance visibleDistance = 100000; // 100 kilometers
-    //region = MKCoordinateRegionMakeWithDistance(region.center, visibleDistance, visibleDistance);
+//    CLLocationDistance visibleDistance = 100000; // 100 kilometers
+//    region = MKCoordinateRegionMakeWithDistance(region.center, visibleDistance, visibleDistance);
 //    region = [self regionThatFits:region];
+    
     [self setRegion:region animated:YES];
 }
 
