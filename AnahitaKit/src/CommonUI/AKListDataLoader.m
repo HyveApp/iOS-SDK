@@ -177,6 +177,8 @@
     NSMutableDictionary    *_parameters;
     RKPaginator     *_paginator;
     NSString *_path;
+    // TODO: remove this when the bug on the server is fixed
+    BOOL _lastPageLoaded;
 }
 
 - (id)initEntityManager:(AKEntityManager*)entityManager
@@ -192,6 +194,7 @@
         _paginate          = paginate;
         _path              = path;
         _parameters        = [NSMutableDictionary dictionaryWithDictionary:_baseParameters];
+        _lastPageLoaded    = NO;
     }
     
     return self;
@@ -206,8 +209,12 @@
 
 - (BOOL)canLoadMoreData
 {
-    if ( _paginator && _paginator.objectRequestOperation == NULL) {
-        return YES;
+    if ( _paginator && _paginator.isLoaded ) {
+        // TODO: remove this condition when the bug on the server is fixed
+        if (_lastPageLoaded) {
+            return NO;
+        }
+        return _paginator.hasNextPage;
     } else {
         return NO;
     }
@@ -271,6 +278,10 @@
 - (void)didLoadObjects:(NSArray*)objects forPage:(NSInteger)page
 {
     [self.objects addObjectsFromArray:objects];
+    
+    if (objects.count < _paginator.perPage) {
+        _lastPageLoaded = YES;
+    }
     if ( self.successBlock ) {
         self.successBlock(objects, page);
     }
