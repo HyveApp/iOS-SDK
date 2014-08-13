@@ -43,7 +43,7 @@
 
     [paginationMapping addAttributeMappingsFromDictionary:@{
         @"pagination.limit":     @"perPage",
-        @"pagination.total":     @"pageCount"
+        @"pagination.total":     @"objectCount"
     }];
     objectManager.paginationMapping = paginationMapping;
 }
