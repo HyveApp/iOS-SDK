@@ -11,6 +11,7 @@
 
 
 NSString *const kAKSessionDidLogin = @"kAKSessionDidLogin";
+NSString *const kAKSessionNewUserDidLogin = @"kAKSessionNewUserDidLogin";
 NSString *const kAKSessionDidFailLogin = @"kAKSessionDidFailLogin";
 NSString *const kAKSessionDidLogout = @"kAKSessionDidLogout";
 NSString *const kAKSessionViewerNotificationKey = @"kAKSessionViewerNotificationKey";
@@ -71,8 +72,14 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 */
 + (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential
 {
+    return [AKSession sessionWithCredential:credential forNewUser:NO];
+}
+
++ (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential forNewUser:(BOOL)isNewUser
+{
     AKSession *session = [self sharedSession];
     session.credential = credential;
+    session.isNewUser = isNewUser;
     return session;
 }
 
@@ -103,7 +110,12 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
         NIDINFO(@"Welcome %@", viewer.name);
         //store the credential in they keychain to be used later
         [[FXKeychain defaultKeychain] setObject:[credential toParameters] forKey:kAKSessionKeyChainKey];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogin object:self userInfo:@{kAKSessionViewerNotificationKey:self.viewer}];
+        if (self.isNewUser) {
+            
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogin object:self userInfo:@{kAKSessionViewerNotificationKey:self.viewer}];
+        }
         if ( success ) {
             success(viewer);
         }

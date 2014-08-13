@@ -40,6 +40,15 @@
 + (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential;
 
 /**
+ @method
+ 
+ @abstract
+ Return a singleton session object. Tries to login the user using the
+ existing username and pasword with option to handle new users
+ */
++ (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential forNewUser:(BOOL)isNewUser;
+
+/**
  @method 
  
  @abstract
@@ -78,6 +87,9 @@
 @property (nonatomic,readonly,getter=isValid) BOOL valid;
 
 /** @abstract */
+@property (nonatomic,assign) BOOL isNewUser;
+
+/** @abstract */
 @property (nonatomic,strong,readonly) id<AKSessionCredential> credential;
 
 /** @abstract */
@@ -89,6 +101,7 @@
  Notifications
 */
 extern NSString *const kAKSessionDidLogin;
+extern NSString *const kAKSessionNewUserDidLogin;
 extern NSString *const kAKSessionDidFailLogin;
 extern NSString *const kAKSessionDidLogout;
 
