@@ -214,6 +214,9 @@
         if (_lastPageLoaded) {
             return NO;
         }
+        if (_paginator.objectCount == 0) {
+            return YES;
+        }
         return _paginator.hasNextPage;
     } else {
         return NO;
