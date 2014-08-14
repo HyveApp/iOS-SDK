@@ -111,7 +111,7 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
         //store the credential in they keychain to be used later
         [[FXKeychain defaultKeychain] setObject:[credential toParameters] forKey:kAKSessionKeyChainKey];
         if (self.isNewUser) {
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionNewUserDidLogin object:self userInfo:@{kAKSessionViewerNotificationKey:self.viewer}];
         }
         else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogin object:self userInfo:@{kAKSessionViewerNotificationKey:self.viewer}];
@@ -156,11 +156,9 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 
 - (void)logout
 {
-    AKPerson *viewer = self.viewer;
     self.viewer = nil;
     [[FXKeychain defaultKeychain] removeObjectForKey:kAKSessionKeyChainKey];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogout
-        object:self userInfo:@{kAKSessionViewerNotificationKey:viewer}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogout object:self userInfo:nil];
 }
 
 #pragma mark - Observing viewer attributes
