@@ -253,6 +253,7 @@
     
     if ( _paginate ) { 
         _paginator = [_entityManager paginatorWithPath:_path paramaters:_parameters];
+        _paginator.perPage = 20;
         [_paginator setCompletionBlockWithSuccess:^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
             [weakself didLoadObjects:objects forPage:page];
         } failure:^(RKPaginator *paginator, NSError *error) {
