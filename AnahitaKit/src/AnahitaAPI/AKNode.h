@@ -31,6 +31,21 @@
 /** @abstract */
 @property (nonatomic, copy) NSString *body;
 
+/** @abstract */
+@property (nonatomic, copy) NSString *objectType;
+
+/** @abstract */
+@property(nonatomic, strong) NSString *address;
+
+/** @abstract */
+@property(nonatomic, strong) NSString *phone;
+
+/** @abstract */
+@property(nonatomic, strong) NSString *facebook;
+
+/** @abstract */
+@property(nonatomic, strong) NSString *twitter;
+
 /**
  @method
  
@@ -68,6 +83,7 @@
 
 /** @abstract */
 @property(nonatomic,readonly) NSURL *squareImageURL;
+
 
 @end
 

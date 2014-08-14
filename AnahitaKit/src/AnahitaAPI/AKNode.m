@@ -53,7 +53,7 @@
     [configuration.mappingForResponse addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForResponse
-        addAttributeMappingsFromArray:@[@"isFollower",@"isLeader",@"leaderCount",@"followerCount", @"imageURL"]];
+        addAttributeMappingsFromArray:@[@"objectType",@"address", @"phone", @"facebook", @"twitter",@"isFollower",@"isLeader",@"leaderCount",@"followerCount", @"imageURL"]];
     
 //    RKAttributeMapping *imageMapping = [RKAttributeMapping attributeMappingForKey:@"imageURL" usingTransformerBlock:^id(id value, __unsafe_unretained Class destinationType) {
 //        
