@@ -65,10 +65,17 @@
     //if viewer is following
     if ( self == [AKSession sharedSession].viewer ) {
         actor.isLeader = YES;
-    }    
-    [actor post:@{@"_action":@"follow"} success:^{
+    }
+    NSString *resourcePath = actor.resourcePath;
+    NSArray *components = [actor.objectType componentsSeparatedByString:@"."];
+    if (components.count > 1) {
+        if ([resourcePath rangeOfString:[components objectAtIndex:1]].location == NSNotFound) {
+            resourcePath = [NSString stringWithFormat:@"%@/%@", [components objectAtIndex:1], actor.nodeID];
+        }
+    }
+    [[RKObjectManager sharedManager] postObject:nil path:resourcePath parameters:@{@"_action":@"follow"} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         successBlock(actor);
-    } failure:^(NSError *error) {
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         if (failureBlock) failureBlock(error);
     }];
 }
@@ -79,9 +86,16 @@
     if ( self == [AKSession sharedSession].viewer ) {
         actor.isLeader = NO;
     }
-    [actor post:@{@"_action":@"unfollow"} success:^{
+    NSString *resourcePath = actor.resourcePath;
+    NSArray *components = [actor.objectType componentsSeparatedByString:@"."];
+    if (components.count > 1) {
+        if ([resourcePath rangeOfString:[components objectAtIndex:1]].location == NSNotFound) {
+            resourcePath = [NSString stringWithFormat:@"%@/%@", [components objectAtIndex:1], actor.nodeID];
+        }
+    }
+    [[RKObjectManager sharedManager] postObject:nil path:resourcePath parameters:@{@"_action":@"unfollow"} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         successBlock(actor);
-    } failure:^(NSError *error) {
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         if (failureBlock) failureBlock(error);
     }];
 }
