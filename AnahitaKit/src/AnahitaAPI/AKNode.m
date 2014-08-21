@@ -53,7 +53,7 @@
     [configuration.mappingForResponse addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForResponse
-        addAttributeMappingsFromArray:@[@"objectType",@"address", @"phone", @"facebook", @"twitter",@"isFollower",@"isLeader",@"leaderCount",@"followerCount", @"imageURL"]];
+        addAttributeMappingsFromArray:@[@"objectType",@"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
     
 //    RKAttributeMapping *imageMapping = [RKAttributeMapping attributeMappingForKey:@"imageURL" usingTransformerBlock:^id(id value, __unsafe_unretained Class destinationType) {
 //        
@@ -122,6 +122,31 @@
 {
     NSString *path = [self.imageURL valueForKeyPath:@"square.url"];
     return [NSURL URLWithString:path];
+}
+
+- (NSAttributedString *)hoursString
+{
+    if (!_hoursString) {
+        if (self.hours.count > 0) {
+            NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:\n"
+                                                                                      attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:15]}];
+            for (NSDictionary *hour in self.hours) {
+                NSString *hourString = [NSString stringWithFormat:@"%@    %@~%@\n", [hour objectForKey:@"weekday"], [hour objectForKey:@"start"], [hour objectForKey:@"end"]];
+                [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:hourString
+                                                                                     attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:15]}]];
+            }
+            _hoursString = hours;
+        }
+        else {
+            NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:\n"
+                                                                                      attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:15]}];
+            [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"Please check back later."
+                                                                                 attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:15]}]];
+            _hoursString = hours;
+        }
+    }
+    
+    return _hoursString;
 }
 
 @end

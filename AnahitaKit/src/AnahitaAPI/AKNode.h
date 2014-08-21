@@ -46,6 +46,12 @@
 /** @abstract */
 @property(nonatomic, strong) NSString *twitter;
 
+/** @abstract */
+@property(nonatomic, strong) NSArray *hours;
+
+/** @abstract */
+@property (strong, nonatomic) NSAttributedString *hoursString;
+
 /**
  @method
  
