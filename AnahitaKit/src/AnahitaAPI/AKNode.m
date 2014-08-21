@@ -53,12 +53,33 @@
     [configuration.mappingForResponse addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForResponse
-        addAttributeMappingsFromArray:@[@"objectType",@"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
+        addAttributeMappingsFromArray:@[@"objectType", @"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
     
 //    RKAttributeMapping *imageMapping = [RKAttributeMapping attributeMappingForKey:@"imageURL" usingTransformerBlock:^id(id value, __unsafe_unretained Class destinationType) {
 //        
 //    }];    
 }
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    if ( self = [super initWithDictionary:dictionary] ) {
+        [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
+        self.name = [dictionary objectForKey:@"name"];
+        self.body = [dictionary objectForKey:@"body"];
+        self.objectType = [dictionary objectForKey:@"objectType"];
+        self.address = [dictionary objectForKey:@"address"];
+        self.phone = [dictionary objectForKey:@"phone"];
+        self.facebook = [dictionary objectForKey:@"facebook"];
+        self.twitter = [dictionary objectForKey:@"twitter"];
+        self.hours = [dictionary objectForKey:@"hours"];
+        self.isFollower = [[dictionary objectForKey:@"isFollower"] boolValue];
+        self.isLeader = [[dictionary objectForKey:@"isLeader"] boolValue];
+        self.leaderCount = [[dictionary objectForKey:@"leaderCount"] integerValue];
+        self.followerCount = [[dictionary objectForKey:@"followerCount"] integerValue];
+        self.imageURL = [dictionary objectForKey:@"imageURL"];
+    }
+    return self;
+}
+
 
 - (void)follow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError *error))failureBlock
 {

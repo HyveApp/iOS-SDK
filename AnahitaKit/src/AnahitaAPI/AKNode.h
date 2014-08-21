@@ -52,6 +52,9 @@
 /** @abstract */
 @property (strong, nonatomic) NSAttributedString *hoursString;
 
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 /**
  @method
  

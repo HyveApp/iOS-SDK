@@ -81,6 +81,9 @@
 + (void)objectsFromPath:(NSString*)path parameters:(NSDictionary*)parameters success:(void(^)(NSArray *objects))success
     failure:(void(^)(NSError *error))failure;
 
+
+- (id)initWithDictionary:(NSDictionary *)dictionary;
+
 /**
  @method
  

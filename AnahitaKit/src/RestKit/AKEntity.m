@@ -108,6 +108,15 @@ static NSMutableDictionary *sharedConfigurations;
     return self;
 }
 
+- (id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if ( self = [super init] ) {
+        _params = [NSMutableDictionary new];
+        _loaded = NO;
+    }
+    return self;
+}
+
 #pragma mark -
 #pragma mark - Entity Loading
 
