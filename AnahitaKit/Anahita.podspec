@@ -100,10 +100,5 @@ Pod::Spec.new do |s|
     subspec.header_dir   = 'Validation'  
     subspec.source_files = 'src/Validation'    
   end  
-  
-  s.subspec 'Validation' do |subspec|
-    subspec.header_dir   = 'Validation'  
-    subspec.source_files = 'src/Validation'    
-  end  
 
 end
