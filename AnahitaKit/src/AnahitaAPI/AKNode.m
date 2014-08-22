@@ -152,7 +152,8 @@
             NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:\n"
                                                                                       attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:14]}];
             for (NSDictionary *hour in self.hours) {
-                NSString *hourString = [NSString stringWithFormat:@"%@    %@~%@\n", [hour objectForKey:@"weekday"], [hour objectForKey:@"start"], [hour objectForKey:@"end"]];
+                NSString *hourString = [hour objectForKey:@"weekday"];
+                hourString = [NSString stringWithFormat:@"%-10s%@~%@\n", [hourString UTF8String], [hour objectForKey:@"start"], [hour objectForKey:@"end"]];
                 [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:hourString
                                                                                      attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:14]}]];
             }
