@@ -148,21 +148,19 @@
 - (NSAttributedString *)hoursString
 {
     if (!_hoursString) {
+        NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:"
+                                                                                  attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:14]}];
         if (self.hours.count > 0) {
-            NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:\n"
-                                                                                      attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:14]}];
             for (NSDictionary *hour in self.hours) {
                 NSString *hourString = [hour objectForKey:@"weekday"];
-                hourString = [NSString stringWithFormat:@"%-10s%@~%@\n", [hourString UTF8String], [hour objectForKey:@"start"], [hour objectForKey:@"end"]];
+                hourString = [NSString stringWithFormat:@"\n%-10s%@~%@", [hourString UTF8String], [hour objectForKey:@"start"], [hour objectForKey:@"end"]];
                 [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:hourString
                                                                                      attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:14]}]];
             }
             _hoursString = hours;
         }
         else {
-            NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:\n"
-                                                                                      attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:14]}];
-            [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"Please check back later."
+            [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\nPlease check back later."
                                                                                  attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:14]}]];
             _hoursString = hours;
         }
