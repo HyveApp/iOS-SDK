@@ -54,10 +54,6 @@
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForResponse
         addAttributeMappingsFromArray:@[@"objectType", @"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
-    
-//    RKAttributeMapping *imageMapping = [RKAttributeMapping attributeMappingForKey:@"imageURL" usingTransformerBlock:^id(id value, __unsafe_unretained Class destinationType) {
-//        
-//    }];    
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -79,7 +75,6 @@
     }
     return self;
 }
-
 
 - (void)follow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError *error))failureBlock
 {
@@ -121,6 +116,24 @@
     }];
 }
 
+- (void)updateWithDictionary:(NSDictionary *)dictionary
+{
+    [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
+    self.name = [dictionary objectForKey:@"name"];
+    self.body = [dictionary objectForKey:@"body"];
+    self.objectType = [dictionary objectForKey:@"objectType"];
+    self.address = [dictionary objectForKey:@"address"];
+    self.phone = [dictionary objectForKey:@"phone"];
+    self.facebook = [dictionary objectForKey:@"facebook"];
+    self.twitter = [dictionary objectForKey:@"twitter"];
+    self.hours = [dictionary objectForKey:@"hours"];
+    self.isFollower = [[dictionary objectForKey:@"isFollower"] boolValue];
+    self.isLeader = [[dictionary objectForKey:@"isLeader"] boolValue];
+    self.leaderCount = [[dictionary objectForKey:@"leaderCount"] integerValue];
+    self.followerCount = [[dictionary objectForKey:@"followerCount"] integerValue];
+    self.imageURL = [dictionary objectForKey:@"imageURL"];
+}
+
 - (NSURL*)largeImageURL
 {
     NSString *path = [self.imageURL valueForKeyPath:@"large.url"];
@@ -143,6 +156,25 @@
 {
     NSString *path = [self.imageURL valueForKeyPath:@"square.url"];
     return [NSURL URLWithString:path];
+}
+
+- (NSDictionary *)toDictionary {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [dictionary setValue:self.nodeID forKeyPath:@"nodeID"];
+    [dictionary setValue:self.name forKeyPath:@"name"];
+    [dictionary setValue:self.body forKeyPath:@"body"];
+    [dictionary setValue:self.objectType forKeyPath:@"objectType"];
+    [dictionary setValue:self.address forKeyPath:@"address"];
+    [dictionary setValue:self.phone forKeyPath:@"phone"];
+    [dictionary setValue:self.facebook forKeyPath:@"facebook"];
+    [dictionary setValue:self.twitter forKeyPath:@"twitter"];
+    [dictionary setValue:self.hours forKeyPath:@"hours"];
+    [dictionary setValue:[NSNumber numberWithBool:self.isFollower] forKeyPath:@"isFollower"];
+    [dictionary setValue:[NSNumber numberWithBool:self.isLeader] forKeyPath:@"isLeader"];
+    [dictionary setValue:[NSNumber numberWithInteger:self.leaderCount] forKeyPath:@"leaderCount"];
+    [dictionary setValue:[NSNumber numberWithInteger:self.followerCount] forKeyPath:@"followerCount"];
+    [dictionary setValue:self.imageURL forKeyPath:@"imageURL"];
+    return dictionary;
 }
 
 - (NSAttributedString *)hoursString

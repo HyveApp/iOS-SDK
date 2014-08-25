@@ -11,11 +11,6 @@
 
 @interface AKNode : AKEntity
 
-/**
- @method
- 
- @abstract
-*/
 + (instancetype)withID:(int)nodeID;
 
 @property (nonatomic, copy) NSString *nodeID;
@@ -24,90 +19,43 @@
 
 @interface AKActor : AKNode
 
-
-/** @abstract */
 @property (nonatomic, copy) NSString *name;
-
-/** @abstract */
 @property (nonatomic, copy) NSString *body;
-
-/** @abstract */
 @property (nonatomic, copy) NSString *objectType;
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *phone;
+@property (nonatomic, strong) NSString *facebook;
+@property (nonatomic, strong) NSString *twitter;
+@property (nonatomic, strong) NSArray *hours;
+@property (nonatomic, strong) NSAttributedString *hoursString;
 
-/** @abstract */
-@property(nonatomic, strong) NSString *address;
-
-/** @abstract */
-@property(nonatomic, strong) NSString *phone;
-
-/** @abstract */
-@property(nonatomic, strong) NSString *facebook;
-
-/** @abstract */
-@property(nonatomic, strong) NSString *twitter;
-
-/** @abstract */
-@property(nonatomic, strong) NSArray *hours;
-
-/** @abstract */
-@property (strong, nonatomic) NSAttributedString *hoursString;
+@property (nonatomic, assign) BOOL isFollower;
+@property (nonatomic, assign) BOOL isLeader;
+@property (nonatomic, assign) NSUInteger followerCount;
+@property (nonatomic, assign) NSUInteger leaderCount;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
-/**
- @method
- 
- @abstract
-*/
 - (void)follow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError* error))failureBlock;
 
-/**
- @method
- 
- @abstract
-*/
 - (void)unfollow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError* error))failureBlock;
 
-/** @abstract */
-@property (nonatomic, assign) BOOL isFollower;
+- (void)updateWithDictionary:(NSDictionary *)dictionary;
 
-/** @abstract */
-@property (nonatomic, assign) BOOL isLeader;
-
-/** @abstract */
-@property (nonatomic, assign) NSUInteger followerCount;
-
-/** @abstract */
-@property (nonatomic, assign) NSUInteger leaderCount;
-
-/** @abstract */
-@property(nonatomic,readonly) NSURL *largeImageURL;
-
-/** @abstract */
-@property(nonatomic,readonly) NSURL *mediumImageURL;
-
-/** @abstract */
-@property(nonatomic,readonly) NSURL *smallImageURL;
-
-/** @abstract */
-@property(nonatomic,readonly) NSURL *squareImageURL;
-
+@property (nonatomic, readonly) NSURL *largeImageURL;
+@property (nonatomic, readonly) NSURL *mediumImageURL;
+@property (nonatomic, readonly) NSURL *smallImageURL;
+@property (nonatomic, readonly) NSURL *squareImageURL;
+@property (nonatomic, readonly) NSDictionary *toDictionary;
 
 @end
 
 @interface AKPerson : AKActor
 
-/** @abstract */
 @property (nonatomic, copy) NSString *email;
-
-/** @abstract */
 @property (nonatomic, copy) NSString *username;
-
-/** @abstract */
 @property (nonatomic, copy) NSString *password;
 
 @end
-
-
 
