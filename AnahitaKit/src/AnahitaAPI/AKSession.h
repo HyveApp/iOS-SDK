@@ -104,6 +104,7 @@ extern NSString *const kAKSessionDidLogin;
 extern NSString *const kAKSessionNewUserDidLogin;
 extern NSString *const kAKSessionDidFailLogin;
 extern NSString *const kAKSessionDidLogout;
+extern NSString *const kAKSessionCredentialDidUpdate;
 
 /**
  Notifications
