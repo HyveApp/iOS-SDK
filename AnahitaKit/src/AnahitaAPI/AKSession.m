@@ -128,6 +128,10 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
         [[RKObjectManager sharedManager] getObject:viewer path:@"people/session" parameters:nil
             success:httpSuccess failure:httpFailure];    
     } else {
+        // TODO: Handle social login
+//        [[RKObjectManager sharedManager] postObject:viewer path:@"connect/login" parameters:[credential toParameters]
+//                                            success:httpSuccess failure:httpFailure];
+        
         [[RKObjectManager sharedManager] postObject:viewer path:@"people/session" parameters:[credential toParameters]
             success:httpSuccess failure:httpFailure];
     }

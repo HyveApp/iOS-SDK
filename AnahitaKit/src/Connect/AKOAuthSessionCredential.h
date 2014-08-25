@@ -16,7 +16,12 @@
  @abstract
 */
 + (instancetype)credentialWithToken:(NSString*)token
+                             secret:(NSString*)secret
+                            serivce:(AKConnectServiceType)service;
+
++ (instancetype)credentialWithToken:(NSString*)token
         secret:(NSString*)secret
+        profileId:(NSString *)profileId
         serivce:(AKConnectServiceType)service;
 
 /** @abstract */
