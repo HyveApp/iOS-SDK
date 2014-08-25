@@ -160,8 +160,9 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 
 - (void)logout
 {
-    self.viewer = nil;
-    self.credential = nil;
+    [_viewer removeObserver:self forKeyPath:@"password" context:nil];
+    _viewer = nil;
+    _credential = nil;
     [[FXKeychain defaultKeychain] removeObjectForKey:kAKSessionKeyChainKey];
     [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogout object:self userInfo:nil];
 }
