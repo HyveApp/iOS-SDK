@@ -58,6 +58,14 @@
 + (instancetype)sharedSession;
 
 /**
+ @method
+ 
+ @abstract
+ Update credential when user update them
+ */
+- (void)updateCredentialWithDictionary:(NSDictionary *)dictionary;
+
+/**
  @method 
  
  @abstract

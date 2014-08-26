@@ -21,8 +21,7 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 
 @implementation NSDictionary(AKSessionCredential)
 
-- (NSDictionary*)toParameters
-{
+- (NSDictionary*)toParameters {
     return self;
 }
 
@@ -30,14 +29,13 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 
 @interface AKSessionBasicAuthCredential()
 
-@property(nonatomic,copy) NSString *username, *password;
+@property (nonatomic, copy) NSString *username, *password;
 
 @end
 
 @implementation AKSessionBasicAuthCredential
 
-- (id)initWithUsername:(NSString *)username andPassword:(NSString *)password
-{
+- (id)initWithUsername:(NSString *)username andPassword:(NSString *)password {
     if ( self = [super init] ) {
         self.password = password;
         self.username = username;
@@ -45,9 +43,9 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
     return self;
 }
 
-- (NSDictionary*)toParameters
-{
-    return @{@"username":self.username,@"password":self.password};
+
+- (NSDictionary*)toParameters {
+    return @{@"username":self.username, @"password":self.password};
 }
 
 @end
@@ -59,8 +57,7 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 
 @end
 
-@implementation AKSession
-{
+@implementation AKSession {
     AKPerson *_viewer;
 }
 
@@ -71,21 +68,20 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
  Return a singleton session object. Tries to login the user using the
  existing username and pasword
 */
-+ (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential
-{
++ (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential {
     return [AKSession sessionWithCredential:credential forNewUser:NO];
 }
 
-+ (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential forNewUser:(BOOL)isNewUser
-{
+
++ (instancetype)sessionWithCredential:(id<AKSessionCredential>)credential forNewUser:(BOOL)isNewUser {
     AKSession *session = [self sharedSession];
     session.credential = credential;
     session.isNewUser = isNewUser;
     return session;
 }
 
-+ (instancetype)sharedSession
-{
+
++ (instancetype)sharedSession {
     static AKSession *sharedSession;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -95,16 +91,35 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
     return sharedSession;
 }
 
-- (id)init
-{
-    if ( self = [super init] ) {
+
+- (id)init {
+    if (self = [super init]) {
         
-;    }
+    }
     return self;
 }
 
-- (void)login:(void(^)(AKPerson *viewer))success failure:(void(^)(NSError *error))failure
-{
+
+- (void)setCredential:(id<AKSessionCredential>)credential {
+    _credential = credential;
+    [[FXKeychain defaultKeychain] setObject:[_credential toParameters] forKey:kAKSessionKeyChainKey];
+}
+
+
+- (void)updateCredentialWithDictionary:(NSDictionary *)dictionary {
+    NSString *username = [self.credential.toParameters objectForKey:@"username"];
+    if ([dictionary objectForKey:@"username"]) {
+        username = [dictionary objectForKey:@"username"];
+    }
+    NSString *password = [self.credential.toParameters objectForKey:@"password"];
+    if ([dictionary objectForKey:@"password"]) {
+        password = [dictionary objectForKey:@"password"];
+    }
+    self.credential = [[AKSessionBasicAuthCredential alloc] initWithUsername:username andPassword:password];
+}
+
+
+- (void)login:(void(^)(AKPerson *viewer))success failure:(void(^)(NSError *error))failure {
     void (^httpSuccess)(RKObjectRequestOperation*, RKMappingResult *)  = ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         NIDINFO(@"Welcome %@", self.viewer.name);
         //store the credential in they keychain to be used later
@@ -115,7 +130,7 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
         else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidLogin object:self userInfo:@{kAKSessionViewerNotificationKey:self.viewer}];
         }
-        if ( success ) {
+        if (success) {
             success(self.viewer);
         }
     };
@@ -123,7 +138,7 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
         [[NSNotificationCenter defaultCenter] postNotificationName:kAKSessionDidFailLogin object:self userInfo:nil];
         if ( failure ) failure(error);
     };
-    if ( nil == self.credential ) {
+    if (self.credential == nil) {
         [[RKObjectManager sharedManager] getObject:self.viewer path:@"people/session" parameters:nil
             success:httpSuccess failure:httpFailure];    
     } else {
@@ -134,35 +149,31 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
         [[RKObjectManager sharedManager] postObject:self.viewer path:@"people/session" parameters:[self.credential toParameters]
             success:httpSuccess failure:httpFailure];
     }
-
 }
 
-- (void)setViewer:(AKPerson *)viewer
-{    
-    [_viewer removeObserver:self forKeyPath:@"password" context:nil];
+
+- (void)setViewer:(AKPerson *)viewer {
     _viewer = viewer;
-    [_viewer addObserver:self forKeyPath:@"password" options:NSKeyValueObservingOptionNew context:nil];
 }
 
-- (AKPerson*)viewer
-{
-    if ( _viewer == nil ) {
+
+- (AKPerson*)viewer {
+    if (_viewer == nil) {
         [self setViewer:[AKPerson new]];
     }
     return _viewer;
 }
 
-- (void)login
-{
+
+- (void)login {
     [self login:nil failure:nil];
 }
 
-- (void)logout
-{
+
+- (void)logout {
     [[RKObjectManager sharedManager] postObject:self.viewer path:@"people/session" parameters:@{@"action" : @"delete"}
                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                             NIDINFO(@"%@ is logged out successfully.", _viewer.name);
-                                            [_viewer removeObserver:self forKeyPath:@"password" context:nil];
                                             _viewer = nil;
                                             _credential = nil;
                                             [[FXKeychain defaultKeychain] removeObjectForKey:kAKSessionKeyChainKey];
@@ -170,7 +181,6 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
                                         }
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                             NIDINFO(@"Failed to log %@ out.", _viewer.name);
-                                            [_viewer removeObserver:self forKeyPath:@"password" context:nil];
                                             _viewer = nil;
                                             _credential = nil;
                                             [[FXKeychain defaultKeychain] removeObjectForKey:kAKSessionKeyChainKey];
@@ -178,17 +188,5 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
                                         }];
 }
 
-#pragma mark - Observing viewer attributes
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(AKPerson*)object change:(NSDictionary *)change context:(void *)context
-{
-    NSString *newPassword = [change valueForKey:NSKeyValueChangeNewKey];
-    if ([keyPath isEqualToString:@"password"] && self.viewer.nodeID != nil && newPassword.length > 0)
-    {
-        [[FXKeychain defaultKeychain] setObject:
-            [[[AKSessionBasicAuthCredential alloc] initWithUsername:self.viewer.username andPassword:newPassword] toParameters]
-          forKey:kAKSessionKeyChainKey];
-    }
-}
 
 @end
