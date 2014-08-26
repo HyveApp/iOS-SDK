@@ -56,7 +56,7 @@
         addAttributeMappingsFromArray:@[@"objectType", @"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+- (id)initWithDictionary:(NSDictionary *)dictionary {
     if ( self = [super initWithDictionary:dictionary] ) {
         [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
         self.name = [dictionary objectForKey:@"name"];

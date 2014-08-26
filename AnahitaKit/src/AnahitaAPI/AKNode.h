@@ -35,7 +35,7 @@
 @property (nonatomic, assign) NSUInteger leaderCount;
 
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 
 - (void)follow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError* error))failureBlock;
 
