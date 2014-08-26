@@ -118,20 +118,48 @@
 
 - (void)updateWithDictionary:(NSDictionary *)dictionary
 {
-    [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
-    self.name = [dictionary objectForKey:@"name"];
-    self.body = [dictionary objectForKey:@"body"];
-    self.objectType = [dictionary objectForKey:@"objectType"];
-    self.address = [dictionary objectForKey:@"address"];
-    self.phone = [dictionary objectForKey:@"phone"];
-    self.facebook = [dictionary objectForKey:@"facebook"];
-    self.twitter = [dictionary objectForKey:@"twitter"];
-    self.hours = [dictionary objectForKey:@"hours"];
-    self.isFollower = [[dictionary objectForKey:@"isFollower"] boolValue];
-    self.isLeader = [[dictionary objectForKey:@"isLeader"] boolValue];
-    self.leaderCount = [[dictionary objectForKey:@"leaderCount"] integerValue];
-    self.followerCount = [[dictionary objectForKey:@"followerCount"] integerValue];
-    self.imageURL = [dictionary objectForKey:@"imageURL"];
+    if ([dictionary objectForKey:@"nodeID"]) {
+        [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
+    }
+    if ([dictionary objectForKey:@"name"]) {
+        self.name = [dictionary objectForKey:@"name"];
+    }
+    if ([dictionary objectForKey:@"body"]) {
+        self.body = [dictionary objectForKey:@"body"];
+    }
+    if ([dictionary objectForKey:@"objectType"]) {
+        self.objectType = [dictionary objectForKey:@"objectType"];
+    }
+    if ([dictionary objectForKey:@"address"]) {
+        self.address = [dictionary objectForKey:@"address"];
+    }
+    if ([dictionary objectForKey:@"phone"]) {
+        self.phone = [dictionary objectForKey:@"phone"];
+    }
+    if ([dictionary objectForKey:@"facebook"]) {
+        self.facebook = [dictionary objectForKey:@"facebook"];
+    }
+    if ([dictionary objectForKey:@"twitter"]) {
+        self.twitter = [dictionary objectForKey:@"twitter"];
+    }
+    if ([dictionary objectForKey:@"hours"]) {
+        self.hours = [dictionary objectForKey:@"hours"];
+    }
+    if ([dictionary objectForKey:@"isFollower"]) {
+        self.isFollower = [[dictionary objectForKey:@"isFollower"] boolValue];
+    }
+    if ([dictionary objectForKey:@"isLeader"]) {
+        self.isLeader = [[dictionary objectForKey:@"isLeader"] boolValue];
+    }
+    if ([dictionary objectForKey:@"leaderCount"]) {
+        self.leaderCount = [[dictionary objectForKey:@"leaderCount"] integerValue];
+    }
+    if ([dictionary objectForKey:@"followerCount"]) {
+        self.followerCount = [[dictionary objectForKey:@"followerCount"] integerValue];
+    }
+    if ([dictionary objectForKey:@"imageURL"]) {
+        self.imageURL = [dictionary objectForKey:@"imageURL"];
+    }
 }
 
 - (NSURL*)largeImageURL
