@@ -40,6 +40,7 @@
 @implementation AKListDataLoader
 
 @dynamic canLoadMoreData;
+@dynamic isLoaded;
 @dynamic parameters;
 
 + (instancetype)dataLoaderFromArray:(NSArray *)data
@@ -124,6 +125,10 @@
 - (BOOL)canLoadMoreData
 {
     return NO;
+}
+
+- (BOOL)isLoaded {
+    return (self.objects.count > 0);
 }
 
 - (void)loadData
@@ -221,6 +226,10 @@
     } else {
         return NO;
     }
+}
+
+- (BOOL)isLoaded {
+    return _paginator.isLoaded;
 }
 
 - (void)loadData

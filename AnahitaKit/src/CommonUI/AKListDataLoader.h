@@ -94,6 +94,9 @@
 @property(nonatomic,assign,readonly) BOOL canLoadMoreData;
 
 /** @abstract */
+@property(nonatomic,assign,readonly) BOOL isLoaded;
+
+/** @abstract */
 @property(nonatomic,readonly) NSDictionary* parameters;
 
 /** @abstract */
