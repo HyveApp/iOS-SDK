@@ -31,8 +31,11 @@
 @end
 
 @interface AKNode(SocPatternWorkAround)
+
 @property(nonatomic,readonly) NSString* nodeid;
+
 @end
+
 @implementation AKNode(SocPatternWorkAround)
 - (NSString*)nodeid {
     return self.nodeID;
@@ -47,14 +50,14 @@
 
 @implementation AKActor
 
-+ (void)configureEntity:(AKEntityManager *)configuration
-{
++ (void)configureEntity:(AKEntityManager *)configuration {
     [super configureEntity:configuration];
     [configuration.mappingForResponse addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForResponse
         addAttributeMappingsFromArray:@[@"objectType", @"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
 }
+
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     if ( self = [super initWithDictionary:dictionary] ) {
@@ -76,18 +79,19 @@
     return self;
 }
 
-- (void)follow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError *error))failureBlock
-{
+
+- (void)follow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError *error))failureBlock {
     //if viewer is following
     if ( self == [AKSession sharedSession].viewer ) {
         actor.isLeader = YES;
     }
-    NSString *resourcePath = actor.resourcePath;
+    NSString *resourcePath;
     NSArray *components = [actor.objectType componentsSeparatedByString:@"."];
     if (components.count > 1) {
-        if ([resourcePath rangeOfString:[components objectAtIndex:1]].location == NSNotFound) {
-            resourcePath = [NSString stringWithFormat:@"%@/%@", [components objectAtIndex:1], actor.nodeID];
-        }
+        resourcePath = [NSString stringWithFormat:@"%@/%@", [components objectAtIndex:1], actor.nodeID];
+    }
+    else {
+        resourcePath = actor.resourcePath;
     }
     [[RKObjectManager sharedManager] postObject:nil path:resourcePath parameters:@{@"_action":@"follow"} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         successBlock(actor);
@@ -96,18 +100,19 @@
     }];
 }
 
-- (void)unfollow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError *error))failureBlock
-{
+
+- (void)unfollow:(AKActor*)actor success:(void (^)(id actor))successBlock failure:(void (^)(NSError *error))failureBlock {
     //if viewer is unfollowing
     if ( self == [AKSession sharedSession].viewer ) {
         actor.isLeader = NO;
     }
-    NSString *resourcePath = actor.resourcePath;
+    NSString *resourcePath;
     NSArray *components = [actor.objectType componentsSeparatedByString:@"."];
     if (components.count > 1) {
-        if ([resourcePath rangeOfString:[components objectAtIndex:1]].location == NSNotFound) {
-            resourcePath = [NSString stringWithFormat:@"%@/%@", [components objectAtIndex:1], actor.nodeID];
-        }
+        resourcePath = [NSString stringWithFormat:@"%@/%@", [components objectAtIndex:1], actor.nodeID];
+    }
+    else {
+        resourcePath = actor.resourcePath;
     }
     [[RKObjectManager sharedManager] postObject:nil path:resourcePath parameters:@{@"_action":@"unfollow"} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         successBlock(actor);
@@ -116,10 +121,13 @@
     }];
 }
 
-- (void)updateWithDictionary:(NSDictionary *)dictionary
-{
+
+- (void)updateWithDictionary:(NSDictionary *)dictionary {
     if ([dictionary objectForKey:@"nodeID"]) {
         [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
+    }
+    else if ([dictionary objectForKey:@"id"]) {
+        [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"id"]]];
     }
     if ([dictionary objectForKey:@"name"]) {
         self.name = [dictionary objectForKey:@"name"];
@@ -162,29 +170,30 @@
     }
 }
 
-- (NSURL*)largeImageURL
-{
+
+- (NSURL*)largeImageURL {
     NSString *path = [self.imageURL valueForKeyPath:@"large.url"];
     return [NSURL URLWithString:path];
 }
 
-- (NSURL*)mediumImageURL
-{
+
+- (NSURL*)mediumImageURL {
     NSString *path = [self.imageURL valueForKeyPath:@"medium.url"];
     return [NSURL URLWithString:path];
 }
 
-- (NSURL*)smallImageURL
-{
+
+- (NSURL*)smallImageURL {
     NSString *path = [self.imageURL valueForKeyPath:@"small.url"];
     return [NSURL URLWithString:path];
 }
 
-- (NSURL*)squareImageURL
-{
+
+- (NSURL*)squareImageURL {
     NSString *path = [self.imageURL valueForKeyPath:@"square.url"];
     return [NSURL URLWithString:path];
 }
+
 
 - (NSDictionary *)toDictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -205,8 +214,8 @@
     return dictionary;
 }
 
-- (NSAttributedString *)hoursString
-{
+
+- (NSAttributedString *)hoursString {
     if (!_hoursString) {
         NSMutableAttributedString *hours = [[NSMutableAttributedString alloc] initWithString:@"Hours:"
                                                                                   attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:14]}];
@@ -233,8 +242,7 @@
 
 @implementation AKPerson
 
-+ (void)configureEntity:(AKEntityManager *)configuration
-{
++ (void)configureEntity:(AKEntityManager *)configuration {
     [super configureEntity:configuration];
     configuration.pathPatternForGettingCollection = @"people";
     configuration.pathPatternForGettingEntity = @"people/:nodeID";
