@@ -94,6 +94,7 @@
         resourcePath = actor.resourcePath;
     }
     [[RKObjectManager sharedManager].HTTPClient postPath:resourcePath parameters:@{@"_action":@"follow"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        actor.followerCount++;
         successBlock(actor);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failureBlock) failureBlock(error);
@@ -115,6 +116,7 @@
         resourcePath = actor.resourcePath;
     }
     [[RKObjectManager sharedManager].HTTPClient postPath:resourcePath parameters:@{@"_action":@"unfollow"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        actor.followerCount--;
         successBlock(actor);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failureBlock) failureBlock(error);
