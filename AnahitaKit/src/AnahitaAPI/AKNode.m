@@ -93,9 +93,9 @@
     else {
         resourcePath = actor.resourcePath;
     }
-    [[RKObjectManager sharedManager] postObject:nil path:resourcePath parameters:@{@"_action":@"follow"} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [[RKObjectManager sharedManager].HTTPClient postPath:resourcePath parameters:@{@"_action":@"follow"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(actor);
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failureBlock) failureBlock(error);
     }];
 }
@@ -114,9 +114,9 @@
     else {
         resourcePath = actor.resourcePath;
     }
-    [[RKObjectManager sharedManager] postObject:nil path:resourcePath parameters:@{@"_action":@"unfollow"} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [[RKObjectManager sharedManager].HTTPClient postPath:resourcePath parameters:@{@"_action":@"unfollow"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(actor);
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failureBlock) failureBlock(error);
     }];
 }
