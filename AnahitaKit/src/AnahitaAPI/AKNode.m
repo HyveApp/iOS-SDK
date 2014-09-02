@@ -61,7 +61,12 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     if ( self = [super initWithDictionary:dictionary] ) {
-        [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
+        if ([dictionary objectForKey:@"nodeID"]) {
+            [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"nodeID"]]];
+        }
+        else {
+            [self setNodeID:[NSString stringWithFormat:@"%@", [dictionary objectForKey:@"id"]]];
+        }
         self.name = [dictionary objectForKey:@"name"];
         self.body = [dictionary objectForKey:@"body"];
         self.objectType = [dictionary objectForKey:@"objectType"];
