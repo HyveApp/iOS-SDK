@@ -236,7 +236,7 @@
             _hoursString = hours;
         }
         else {
-            [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\nPlease check back later."
+            [hours appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\nPlease check again later."
                                                                                  attributes:@{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:14]}]];
             _hoursString = hours;
         }
