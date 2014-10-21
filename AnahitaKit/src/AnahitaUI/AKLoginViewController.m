@@ -7,6 +7,7 @@
 //
 
 #import "AKAnahitaUI.h"
+#import "Facebook.h"
 
 @interface AKLoginViewController() 
 

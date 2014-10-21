@@ -6,7 +6,6 @@
 //
 //
 
-#import "Facebook-iOS-SDK/FacebookSDK/Facebook.h"
 #import "SHOmniAuthProvider.h"
 #import "AKAnahitaAPI.h"
 #import "SHOmniAuthTwitter.h"
