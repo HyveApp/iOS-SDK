@@ -9,7 +9,6 @@
 #import "AKAnahitaAPI.h"
 #import "FXKeychain.h"
 
-
 NSString *const kAKSessionDidLogin = @"kAKSessionDidLogin";
 NSString *const kAKSessionNewUserDidLogin = @"kAKSessionNewUserDidLogin";
 NSString *const kAKSessionDidFailLogin = @"kAKSessionDidFailLogin";
@@ -102,7 +101,6 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
 
 - (void)setCredential:(id<AKSessionCredential>)credential {
     _credential = credential;
-    [[FXKeychain defaultKeychain] setObject:[_credential toParameters] forKey:kAKSessionKeyChainKey];
 }
 
 
@@ -140,14 +138,19 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
     };
     if (self.credential == nil) {
         [[RKObjectManager sharedManager] getObject:self.viewer path:@"people/session" parameters:nil
-            success:httpSuccess failure:httpFailure];    
-    } else {
-        // TODO: Handle social login
-//        [[RKObjectManager sharedManager] postObject:viewer path:@"connect/login" parameters:[credential toParameters]
-//                                            success:httpSuccess failure:httpFailure];
-        
-        [[RKObjectManager sharedManager] postObject:self.viewer path:@"people/session" parameters:[self.credential toParameters]
             success:httpSuccess failure:httpFailure];
+    }
+    else {
+        NSDictionary *parameters = [self.credential toParameters];
+        if ([parameters objectForKey:@"username"] && [parameters objectForKey:@"password"]) {
+            
+            [[RKObjectManager sharedManager] postObject:self.viewer path:@"people/session" parameters:parameters
+                                                success:httpSuccess failure:httpFailure];
+        }
+        else {
+            [[RKObjectManager sharedManager] postObject:self.viewer path:@"connect/login" parameters:parameters
+                                                success:httpSuccess failure:httpFailure];
+        }
     }
 }
 

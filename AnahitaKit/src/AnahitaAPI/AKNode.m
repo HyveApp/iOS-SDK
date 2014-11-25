@@ -255,10 +255,14 @@
     configuration.pathPatternForGettingEntity = @"people/:nodeID";
     [configuration.mappingForResponse addAttributeMappingsFromArray:@[@"email",@"username"]];
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"email",@"username",@"password"]];
-    [RKResponseDescriptor responseDescriptorWithMapping:configuration.mappingForResponse
-     method:RKRequestMethodPOST | RKRequestMethodGET pathPattern:@"people/session" keyPath:nil statusCodes:
-        RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)
-     ];       
+    
+    configuration.responseDescriptorsForEntity = @[[RKResponseDescriptor responseDescriptorWithMapping:configuration.mappingForResponse
+                                                                                                method:RKRequestMethodPOST | RKRequestMethodGET pathPattern:@"people/session" keyPath:nil
+                                                                                           statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
+                                                   [RKResponseDescriptor responseDescriptorWithMapping:configuration.mappingForResponse
+                                                                                                method:RKRequestMethodPOST pathPattern:@"connect/login" keyPath:nil
+                                                                                           statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]
+                                                   ];
 }
 
 @end
