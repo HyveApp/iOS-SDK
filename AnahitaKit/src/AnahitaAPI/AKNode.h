@@ -24,8 +24,10 @@
 @property (nonatomic, copy) NSString *objectType;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *phone;
+@property (nonatomic, strong) NSString *site;
 @property (nonatomic, strong) NSString *facebook;
 @property (nonatomic, strong) NSString *twitter;
+@property (nonatomic, strong) NSString *instagram;
 @property (nonatomic, strong) NSArray *hours;
 @property (nonatomic, strong) NSAttributedString *hoursString;
 

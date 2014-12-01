@@ -55,7 +55,7 @@
     [configuration.mappingForResponse addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForRequest addAttributeMappingsFromArray:@[@"name",@"body"]];
     [configuration.mappingForResponse
-        addAttributeMappingsFromArray:@[@"objectType", @"address", @"phone", @"facebook", @"twitter", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
+        addAttributeMappingsFromArray:@[@"objectType", @"address", @"phone", @"site", @"facebook", @"twitter", @"instagram", @"hours", @"isFollower", @"isLeader", @"leaderCount", @"followerCount", @"imageURL"]];
 }
 
 
@@ -72,8 +72,10 @@
         self.objectType = [dictionary objectForKey:@"objectType"];
         self.address = [dictionary objectForKey:@"address"];
         self.phone = [dictionary objectForKey:@"phone"];
+        self.site = [dictionary objectForKey:@"site"];
         self.facebook = [dictionary objectForKey:@"facebook"];
         self.twitter = [dictionary objectForKey:@"twitter"];
+        self.instagram = [dictionary objectForKey:@"instagram"];
         self.hours = [dictionary objectForKey:@"hours"];
         self.isFollower = [[dictionary objectForKey:@"isFollower"] boolValue];
         self.isLeader = [[dictionary objectForKey:@"isLeader"] boolValue];
@@ -151,11 +153,17 @@
     if ([dictionary objectForKey:@"phone"]) {
         self.phone = [dictionary objectForKey:@"phone"];
     }
+    if ([dictionary objectForKey:@"site"]) {
+        self.site = [dictionary objectForKey:@"site"];
+    }
     if ([dictionary objectForKey:@"facebook"]) {
         self.facebook = [dictionary objectForKey:@"facebook"];
     }
     if ([dictionary objectForKey:@"twitter"]) {
         self.twitter = [dictionary objectForKey:@"twitter"];
+    }
+    if ([dictionary objectForKey:@"instagram"]) {
+        self.instagram = [dictionary objectForKey:@"instagram"];
     }
     if ([dictionary objectForKey:@"hours"]) {
         self.hours = [dictionary objectForKey:@"hours"];
@@ -210,8 +218,10 @@
     [dictionary setValue:self.objectType forKeyPath:@"objectType"];
     [dictionary setValue:self.address forKeyPath:@"address"];
     [dictionary setValue:self.phone forKeyPath:@"phone"];
+    [dictionary setValue:self.site forKeyPath:@"site"];
     [dictionary setValue:self.facebook forKeyPath:@"facebook"];
     [dictionary setValue:self.twitter forKeyPath:@"twitter"];
+    [dictionary setValue:self.instagram forKeyPath:@"instagram"];
     [dictionary setValue:self.hours forKeyPath:@"hours"];
     [dictionary setValue:[NSNumber numberWithBool:self.isFollower] forKeyPath:@"isFollower"];
     [dictionary setValue:[NSNumber numberWithBool:self.isLeader] forKeyPath:@"isLeader"];
