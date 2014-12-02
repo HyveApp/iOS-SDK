@@ -141,13 +141,15 @@ NSString *const kAKSessionKeyChainKey = @"kAKSessionKeyChainKey";
             success:httpSuccess failure:httpFailure];
     }
     else {
-        NSDictionary *parameters = [self.credential toParameters];
+        NSDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:[self.credential toParameters]];
         if ([parameters objectForKey:@"username"] && [parameters objectForKey:@"password"]) {
-            
             [[RKObjectManager sharedManager] postObject:self.viewer path:@"people/session" parameters:parameters
                                                 success:httpSuccess failure:httpFailure];
         }
         else {
+            if (self.isNewUser) {
+                [parameters setValue:self.viewer.nodeID forKey:@"owner_id"];
+            }
             [[RKObjectManager sharedManager] postObject:self.viewer path:@"connect/login" parameters:parameters
                                                 success:httpSuccess failure:httpFailure];
         }
