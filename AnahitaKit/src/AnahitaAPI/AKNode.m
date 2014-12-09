@@ -273,6 +273,9 @@
                                                                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
                                                    [RKResponseDescriptor responseDescriptorWithMapping:configuration.mappingForResponse
                                                                                                 method:RKRequestMethodPOST pathPattern:@"people/(null)" keyPath:nil
+                                                                                           statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
+                                                   [RKResponseDescriptor responseDescriptorWithMapping:configuration.mappingForResponse
+                                                                                                method:RKRequestMethodPOST pathPattern:@"people/:nodeID" keyPath:nil
                                                                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]
                                                    ];
 }
